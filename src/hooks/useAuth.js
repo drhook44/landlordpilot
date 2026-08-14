@@ -1,34 +1,77 @@
 'use client';
 
-import { useState, createContext, useContext } from 'react';
+import { useState, createContext, useContext, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
+
+  useEffect(() => {
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        setUser({
+          email: session.user.email,
+          name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0],
+          id: session.user.id,
+        });
+      }
+      setLoading(false);
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session?.user) {
+        setUser({
+          email: session.user.email,
+          name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0],
+          id: session.user.id,
+        });
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const signIn = async (email, password) => {
     setLoading(true);
-    // Simulate API delay
-    await new Promise(r => setTimeout(r, 800));
-    // Demo login — any email/password works
-    setUser({ email, name: email.split('@')[0].replace(/\./g, ' ').replace(/\b\w/g, l => l.toUpperCase()) });
-    setLoading(false);
-    router.push('/dashboard');
+    try {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      router.push('/dashboard');
+    } catch (err) {
+      throw err;
+    } finally {
+      setLoading(false);
+    }
   };
 
   const signUp = async (name, email, password) => {
     setLoading(true);
-    await new Promise(r => setTimeout(r, 800));
-    setUser({ email, name });
-    setLoading(false);
-    router.push('/onboarding');
+    try {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { data: { full_name: name } },
+      });
+      if (error) throw error;
+      router.push('/onboarding');
+    } catch (err) {
+      throw err;
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const signOut = () => {
+  const signOut = async () => {
+    await supabase.auth.signOut();
     setUser(null);
     router.push('/login');
   };

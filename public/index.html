@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LandlordPilot AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{colors:{brand:{50:'#fef7ee',100:'#fdedd3',200:'#f9d7a5',300:'#f5bb6d',400:'#f09833',500:'#ec7d0e',600:'#dd6209',700:'#b7490a',800:'#923a10',900:'#763211',950:'#401806'}}}}}</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,sans-serif;background:#fafaf9;color:#18181b}
+.section{display:none;padding:40px 24px;min-height:100vh}
+.section.active{display:block}
+.home{display:block}
+</style>
+</head>
+<body>
+
+<div id="page-home" class="section home active">
+  <div class="bg-brand-600 text-white text-center text-sm py-2.5 px-4">🚀 LandlordPilot AI is live! <a href="#" onclick="showPage('signup')" class="underline font-semibold" style="color:white">Sign up free</a></div>
+  <header class="sticky top-0 z-50 bg-stone-50/80 backdrop-blur-lg border-b border-zinc-200/50">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#" onclick="showPage('home')" class="flex items-center gap-2 no-underline"><span class="text-2xl">🏠</span><span class="font-semibold text-lg">Landlord<span class="text-brand-600">Pilot</span> AI</span></a>
+      <nav class="flex items-center gap-8 text-sm font-medium text-zinc-600">
+        <a href="#features" class="hover:text-zinc-900 no-underline">Features</a>
+        <a href="#how" class="hover:text-zinc-900 no-underline">How It Works</a>
+        <a href="#testimonials" class="hover:text-zinc-900 no-underline">Testimonials</a>
+        <a href="#pricing" class="hover:text-zinc-900 no-underline">Pricing</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <a href="#" onclick="showPage('login')" class="text-sm font-medium text-zinc-600 hover:text-zinc-900 no-underline">Sign In</a>
+        <a href="#" onclick="showPage('signup')" class="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-brand-700 no-underline">Start Free →</a>
+      </div>
+    </div>
+  </header>
+  <section class="py-20 sm:py-32 text-center"><div class="max-w-3xl mx-auto px-6">
+    <div class="inline-flex items-center gap-2 rounded-full bg-brand-50 border border-brand-200 px-4 py-1.5 text-sm font-medium text-brand-700 mb-8"><span class="w-2 h-2 rounded-full bg-brand-500" style="animation:pulse 2s infinite"></span> Now in public beta</div>
+    <h1 class="text-5xl sm:text-7xl font-bold tracking-tight leading-[1.05] mb-6">Your AI co-pilot for<br><span class="bg-gradient-to-r from-brand-500 to-brand-700 bg-clip-text text-transparent">rental property management</span></h1>
+    <p class="text-lg sm:text-xl text-zinc-600 max-w-2xl mx-auto mb-10">LandlordPilot AI automates tenant screening, rent collection, maintenance tracking, and financial reporting.</p>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="#" onclick="showPage('signup')" class="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-8 py-4 text-base font-medium text-white shadow-lg hover:bg-brand-700 no-underline">Start free trial →</a>
+      <a href="#" onclick="showPage('login')" class="inline-flex items-center gap-2 rounded-lg border border-zinc-200 bg-white px-8 py-4 text-base font-medium text-zinc-900 hover:bg-zinc-50 no-underline shadow-sm">Sign In</a>
+    </div>
+  </div></section>
+  <section id="features" class="py-20 bg-white"><div class="max-w-6xl mx-auto px-6">...</div></section>
+  <section id="how" class="py-20">...</section>
+  <section id="testimonials" class="py-20 bg-white">...</section>
+  <section id="pricing" class="py-20">...</section>
+  <footer class="bg-zinc-900 py-16 text-center text-zinc-500 text-sm"><div class="max-w-6xl mx-auto px-6">© 2025 LandlordPilot AI</div></footer>
+</div>
+
+<div id="page-login" class="section">[login content]</div>
+<div id="page-signup" class="section">[signup content]</div>
+<div id="page-dashboard" class="section">[dashboard content]</div>
+<div id="page-properties" class="section">[properties content]</div>
+<div id="page-tenants" class="section">[tenants content]</div>
+<div id="page-rent" class="section">[rent content]</div>
+<div id="page-maintenance" class="section">[maintenance content]</div>
+<div id="page-reports" class="section">[reports content]</div>
+
+<script>
+function showPage(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  var el = document.getElementById('page-' + name);
+  if (el) el.classList.add('active');
+  window.scrollTo(0,0);
+}
+</script>
+<style>
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+</style>
+</body>
+</html>
